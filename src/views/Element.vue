@@ -1,113 +1,12 @@
 <template>
   <div>
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Detalle de Equipo</h6>
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Inventario</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Detalle de Equipo</li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para Reportar Falla -->
-    <div class="modal fade" id="reportarFallaModal" tabindex="-1" role="dialog" aria-labelledby="reportarFallaModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="reportarFallaModalLabel">Reportar falla equipo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-control-label">Describa la falla o defecto a reportar del equipo:</label>
-              <textarea class="form-control" v-model="observacion" rows="4"></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger" @click="reportarFalla(observacion)">Generar solicitud ejecución garantía</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para Agregar Comentario -->
-    <div class="modal fade" id="agregarComentarioModal" tabindex="-1" role="dialog" aria-labelledby="agregarComentarioModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="agregarComentarioModalLabel">Agregar Comentario</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-control-label">Ingrese comentario respecto al equipo:</label>
-              <textarea class="form-control" v-model="observacion" rows="4"></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" @click="agregarComentario(observacion, 'INFO')">Agregar Comentario</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para Archivos Adjuntos -->
-    <div class="modal fade" id="archivosModal" tabindex="-1" role="dialog" aria-labelledby="archivosModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="archivosModalLabel">Archivos Adjuntados</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Archivo</th>
-                    <th scope="col">Tipo Documento</th>
-                    <th scope="col">Fecha Carga</th>
-                    <th scope="col">Descarga</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(file, index) in listUploadedFiles" :key="index">
-                    <td>{{ file.NombreArchivo }}</td>
-                    <td>{{ file.CategoriaArchivo }}</td>
-                    <td>{{ file.FechaCarga }}</td>
-                    <td>
-                      <button class="btn btn-sm btn-primary" @click="downloadFile($event)" :id="file.LinkArchivo">
-                        <i class="fas fa-download"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr v-if="listUploadedFiles.length === 0">
-                    <td colspan="4" class="text-center">No hay archivos disponibles</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-image: url(img/aisladores.jpg); background-size: cover; background-position: center top;">
+      <span class="mask bg-gradient-primary opacity-8"></span>
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white">Elementos del Sistema</h1>
+            <p class="text-white mt-0 mb-5">Gestión de elementos del sistema de calidad</p>
           </div>
         </div>
       </div>
@@ -115,313 +14,327 @@
 
     <div class="container-fluid mt--7">
       <div class="row">
-        <div class="col-xl-7 col-lg-7">
-          <!-- Información del Equipo -->
-          <div class="card shadow mb-4">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">{{ datosEquipo.nombreEquipo }}</h3>
-            </div>
-            <div class="card-body">
-              <div v-if="datosEquipo.falla" class="alert alert-danger mb-4">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Equipo reportado en falla el {{ formatDate(datosEquipo.fechaFalla, 'DD-MM-YYYY') }}
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+              <div class="d-flex justify-content-between">
+                <a href="#" class="btn btn-sm btn-info mr-4">Elementos</a>
+                <a href="#" class="btn btn-sm btn-default float-right">Registros</a>
               </div>
-              
+            </div>
+            <div class="card-body pt-0 pt-md-4">
               <div class="row">
-                <div class="col-md-6">
-                  <h6 class="heading-small text-muted mb-4">Información General</h6>
-                  <div class="pl-lg-4">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Identificador Transelec</label>
-                          <p class="form-control-static">{{ datosEquipo.ID }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Descripción del Equipo</label>
-                          <p class="form-control-static">{{ datosEquipo.descripcion }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Ubicación</label>
-                          <p class="form-control-static">{{ datosEquipo.ubicacion }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Área Responsable</label>
-                          <p class="form-control-static">{{ datosEquipo.areaResponsable }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Identificador contrato</label>
-                          <p class="form-control-static">{{ datosEquipo.idContrato }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Categoría Equipo</label>
-                          <p class="form-control-static">{{ datosEquipo.categoria }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Criticidad</label>
-                          <p class="form-control-static">{{ datosEquipo.criticidad }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="col-md-6">
-                  <h6 class="heading-small text-muted mb-4">Estado de Garantía</h6>
-                  <div class="pl-lg-4">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Estado</label>
-                          <p class="form-control-static">
-                            <span class="badge badge-success">Vigente</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Fecha expiración garantía</label>
-                          <p class="form-control-static">{{ datosEquipo.fechaFinGarantia }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Meses garantía</label>
-                          <p class="form-control-static">{{ datosEquipo.mesesGarantia }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Fabricante</label>
-                          <p class="form-control-static">{{ datosEquipo.fabricante }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Proveedor</label>
-                          <p class="form-control-static">{{ datosEquipo.proveedor }}</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Fecha de PES</label>
-                          <p class="form-control-static">{{ datosEquipo.fechaPES }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                      <div class="col-12">
-                        <div v-if="datosEquipo.falla">
-                          <!-- Si el equipo está en falla, mostrar botón para informar solución -->
-                          <!-- <button v-if="useremail" class="btn btn-success" data-toggle="modal" data-target="#agregarComentarioModal">
-                            <i class="fas fa-check-circle mr-2"></i>Informar solución de falla
-                          </button> -->
-                        </div>
-                        <div v-else>
-                          <button v-if="useremail" class="btn btn-danger" data-toggle="modal" data-target="#reportarFallaModal">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>Reportar falla equipo
-                          </button>
-                          <button v-else class="btn btn-info" @click="login">
-                            <i class="fas fa-question-circle mr-2"></i>¿Reportar equipo en falla?
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <hr class="my-4">
-              
-              <!-- Documentación -->
-              <h6 class="heading-small text-muted mb-4">Documentación</h6>
-              <div class="pl-lg-4">
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label">Fotos Equipo</label>
-                      <div>
-                        <button class="btn btn-sm btn-primary" @click="showUploadFiles($event)" :id="JSON.stringify(datosEquipo.listImagenes)">
-                          <i class="fas fa-images mr-2"></i>Ver fotos
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label">Manuales Técnicos</label>
-                      <div>
-                        <button class="btn btn-sm btn-primary" @click="showUploadFiles($event)" :id="JSON.stringify(datosEquipo.listAdjuntos)">
-                          <i class="fas fa-file-pdf mr-2"></i>Ver manuales
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label">Documentos administrativos</label>
-                      <div>
-                        <button class="btn btn-sm btn-primary" @click="showUploadFiles($event)" :id="JSON.stringify(datosEquipo.listDocumentos)">
-                          <i class="fas fa-file-alt mr-2"></i>Ver documentos
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Historial -->
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Historial</h3>
-                </div>
-                <div class="col text-right">
-                  <button v-if="useremail" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#agregarComentarioModal">
-                    <i class="fas fa-plus mr-2"></i>Agregar comentario
-                  </button>
-                  <button v-else class="btn btn-sm btn-info" @click="login">
-                    <i class="fas fa-sign-in-alt mr-2"></i>Iniciar sesión para comentar
-                  </button>
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">{{ elementCount }}</span>
+                      <span class="description">Elementos</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ activeElementCount }}</span>
+                      <span class="description">Activos</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ inactiveElementCount }}</span>
+                      <span class="description">Inactivos</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Observación</th>
-                    <th scope="col">Realizada por</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in datosEquipo.historial" :key="index">
-                    <td>{{ formatDate(item.fecha, 'DD-MM-YYYY') }}</td>
-                    <td>
-                      <span class="text-capitalize">{{ item.estado.toLowerCase() }}</span>
-                    </td>
-                    <td>{{ item.observacion }}</td>
-                    <td>{{ processUser(item.user) }}</td>
-                  </tr>
-                  <tr v-if="!datosEquipo.historial || datosEquipo.historial.length === 0">
-                    <td colspan="4" class="text-center">Sin cambios registrados.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="card-footer py-4" v-if="datosEquipo.historial && datosEquipo.historial.length > 10">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-center mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div class="text-center">
+                <h3>Elementos del Sistema</h3>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>Gestión de elementos
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i>Componentes del SGC
+                </div>
+                <hr class="my-4" />
+                <p>Esta sección permite gestionar los elementos que componen el sistema de gestión de calidad, como procesos, procedimientos, instructivos, formatos y otros documentos relacionados.</p>
+                <a href="#" @click.prevent="showInfoModal = true">Más información</a>
+              </div>
             </div>
           </div>
         </div>
-        
-        <div class="col-xl-5 col-lg-5">
-          <!-- Ficha Técnica -->
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Ficha Técnica</h3>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Elementos del Sistema</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href="#" class="btn btn-sm btn-primary" @click.prevent="showAddElementModal = true">Agregar elemento</a>
+                </div>
+              </div>
             </div>
             <div class="card-body">
-              <div class="row">
-                <div class="col-lg-12">
+              <!-- Filtros -->
+              <div class="row mb-4">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="form-control-label">Número de serie</label>
-                    <p class="form-control-static">{{ datosEquipo.numeroSerie }}</p>
+                    <label class="form-control-label">Filtrar por tipo</label>
+                    <select class="form-control" v-model="filterType">
+                      <option value="">Todos los tipos</option>
+                      <option value="proceso">Proceso</option>
+                      <option value="procedimiento">Procedimiento</option>
+                      <option value="instructivo">Instructivo</option>
+                      <option value="formato">Formato</option>
+                      <option value="otro">Otro</option>
+                    </select>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="form-control-label">Fabricante</label>
-                    <p class="form-control-static">{{ datosEquipo.fabricante }}</p>
+                    <label class="form-control-label">Filtrar por estado</label>
+                    <select class="form-control" v-model="filterStatus">
+                      <option value="">Todos los estados</option>
+                      <option value="activo">Activo</option>
+                      <option value="inactivo">Inactivo</option>
+                    </select>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="form-control-label">Proveedor</label>
-                    <p class="form-control-static">{{ datosEquipo.proveedor }}</p>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label">Modelo Equipo</label>
-                    <p class="form-control-static">{{ datosEquipo.modelo }}</p>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label">Comentarios (tension kV)</label>
-                    <p class="form-control-static">{{ datosEquipo.comentarios }}</p>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label">Año fabricacion</label>
-                    <p class="form-control-static">{{ datosEquipo.anoFabricacion }}</p>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label">Manuales Técnicos</label>
-                    <div>
-                      <button class="btn btn-sm btn-primary" @click="showUploadFiles($event)" :id="JSON.stringify(datosEquipo.listAdjuntos)">
-                        <i class="fas fa-file-pdf mr-2"></i>Ver manuales
-                      </button>
-                    </div>
+                    <label class="form-control-label">Buscar</label>
+                    <input type="text" class="form-control" v-model="searchQuery" placeholder="Buscar por nombre o código">
                   </div>
                 </div>
               </div>
-              
-              <div class="row justify-content-center mt-4">
-                <div class="col-auto">
-                  <div id="qrcode" class="text-center">
-                    <img :src="qrImageUrl" alt="QR Code" v-if="qrImageUrl" class="img-fluid" style="max-width: 200px;">
-                  </div>
-                </div>
+
+              <!-- Tabla de elementos -->
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Código</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Estado</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(element, index) in filteredElements" :key="index">
+                      <td>{{ element.codigo }}</td>
+                      <td>{{ element.nombre }}</td>
+                      <td>{{ capitalizeFirst(element.tipo) }}</td>
+                      <td>
+                        <span :class="element.estado === 'activo' ? 'badge badge-success' : 'badge badge-danger'">
+                          {{ capitalizeFirst(element.estado) }}
+                        </span>
+                      </td>
+                      <td>{{ formatDate(element.fecha) }}</td>
+                      <td>
+                        <button class="btn btn-sm btn-info mr-2" @click="viewElement(element)">
+                          <i class="ni ni-single-copy-04"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary mr-2" @click="editElement(element)">
+                          <i class="ni ni-ruler-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" @click="confirmDeleteElement(element)">
+                          <i class="ni ni-fat-remove"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr v-if="filteredElements.length === 0">
+                      <td colspan="6" class="text-center">No hay elementos disponibles.</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para agregar/editar elemento -->
+    <div class="modal fade" :class="{'show d-block': showAddElementModal}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ isEditing ? 'Editar Elemento' : 'Agregar Elemento' }}</h5>
+            <button type="button" class="close" @click="closeElementModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-control-label">Código</label>
+              <input type="text" class="form-control" v-model="currentElement.codigo" placeholder="Ingrese código del elemento">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Nombre</label>
+              <input type="text" class="form-control" v-model="currentElement.nombre" placeholder="Ingrese nombre del elemento">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Tipo</label>
+              <select class="form-control" v-model="currentElement.tipo">
+                <option value="">Seleccione un tipo</option>
+                <option value="proceso">Proceso</option>
+                <option value="procedimiento">Procedimiento</option>
+                <option value="instructivo">Instructivo</option>
+                <option value="formato">Formato</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Estado</label>
+              <select class="form-control" v-model="currentElement.estado">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Descripción</label>
+              <textarea class="form-control" v-model="currentElement.descripcion" rows="3" placeholder="Ingrese descripción del elemento"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Archivo</label>
+              <input type="file" class="form-control" @change="handleFileUpload">
+              <small v-if="isEditing && !selectedFile" class="form-text text-muted">Deje en blanco para mantener el archivo actual.</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="closeElementModal">Cancelar</button>
+            <button type="button" class="btn btn-primary" @click="saveElement" :disabled="!isFormValid">
+              {{ isEditing ? 'Actualizar' : 'Guardar' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para ver elemento -->
+    <div class="modal fade" :class="{'show d-block': showViewElementModal}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ selectedElement.nombre }}</h5>
+            <button type="button" class="close" @click="showViewElementModal = false">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Código</label>
+                  <p>{{ selectedElement.codigo }}</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Tipo</label>
+                  <p>{{ capitalizeFirst(selectedElement.tipo) }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Estado</label>
+                  <p>
+                    <span :class="selectedElement.estado === 'activo' ? 'badge badge-success' : 'badge badge-danger'">
+                      {{ capitalizeFirst(selectedElement.estado) }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Fecha</label>
+                  <p>{{ formatDate(selectedElement.fecha) }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="form-control-label">Descripción</label>
+                  <p>{{ selectedElement.descripcion || 'Sin descripción' }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" v-if="selectedElement.url">
+              <div class="col-md-12 text-center">
+                <a :href="selectedElement.url" target="_blank" class="btn btn-primary">
+                  <i class="ni ni-cloud-download-95 mr-2"></i> Descargar documento
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="showViewElementModal = false">Cerrar</button>
+            <button type="button" class="btn btn-primary" @click="editElement(selectedElement)">Editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div class="modal fade" :class="{'show d-block': showDeleteConfirmModal}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmar eliminación</h5>
+            <button type="button" class="close" @click="showDeleteConfirmModal = false">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>¿Está seguro que desea eliminar el elemento "{{ selectedElement.nombre }}"?</p>
+            <p class="text-danger">Esta acción no se puede deshacer.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="showDeleteConfirmModal = false">Cancelar</button>
+            <button type="button" class="btn btn-danger" @click="deleteElement">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de información -->
+    <div class="modal fade" :class="{'show d-block': showInfoModal}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Elementos del Sistema</h5>
+            <button type="button" class="close" @click="showInfoModal = false">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Los elementos del sistema de gestión de calidad son los componentes que conforman la estructura documental del sistema. Estos elementos pueden ser:</p>
+            <ul>
+              <li><strong>Procesos:</strong> Conjunto de actividades mutuamente relacionadas que utilizan las entradas para proporcionar un resultado previsto.</li>
+              <li><strong>Procedimientos:</strong> Forma especificada de llevar a cabo una actividad o un proceso.</li>
+              <li><strong>Instructivos:</strong> Documentos que proporcionan información detallada sobre cómo realizar tareas específicas.</li>
+              <li><strong>Formatos:</strong> Plantillas utilizadas para registrar información relacionada con el sistema de gestión de calidad.</li>
+              <li><strong>Otros:</strong> Cualquier otro tipo de documento que forme parte del sistema de gestión de calidad.</li>
+            </ul>
+            <p>La gestión adecuada de estos elementos es fundamental para mantener un sistema de gestión de calidad eficaz y conforme con los requisitos de la norma ISO 9001:2015.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="showInfoModal = false">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast para notificaciones -->
+    <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+      <div class="toast fade" :class="{'show': showToast}" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+        <div class="toast-header" :class="toastClass">
+          <strong class="mr-auto text-white">{{ toastTitle }}</strong>
+          <button type="button" class="ml-2 mb-1 close" @click="showToast = false">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          {{ toastMessage }}
         </div>
       </div>
     </div>
@@ -434,250 +347,299 @@ import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/auth';
 import moment from 'moment';
-import QRCode from 'qrcode';
-import { getUserKeyAndType } from '@/model/functions';
 
 export default {
   name: 'Element',
   data() {
     return {
-      useremail: '',
-      userDisplayName: '',
-      showModalDetalleArchivos: false,
-      listUploadedFiles: [],
-      observacion: '',
-      elementid: this.$route.params.elementid,
-      datosEquipo: {},
-      qrImageUrl: '',
-      SE: 'SE Ancoa' // Valor por defecto, debería venir de la configuración o parámetros
+      elements: [],
+      selectedElement: {},
+      currentElement: {
+        codigo: '',
+        nombre: '',
+        tipo: '',
+        estado: 'activo',
+        descripcion: '',
+        fecha: null,
+        url: ''
+      },
+      selectedFile: null,
+      isEditing: false,
+      
+      // Filtros
+      filterType: '',
+      filterStatus: '',
+      searchQuery: '',
+      
+      // Modales
+      showAddElementModal: false,
+      showViewElementModal: false,
+      showDeleteConfirmModal: false,
+      showInfoModal: false,
+      
+      // Toast notification
+      showToast: false,
+      toastTitle: '',
+      toastMessage: '',
+      toastClass: ''
     };
   },
-  methods: {
-    processUser(user) {
-      return user || 'Usuario desconocido';
+  computed: {
+    isFormValid() {
+      const requiredFields = this.currentElement.codigo && 
+                            this.currentElement.nombre && 
+                            this.currentElement.tipo;
+      
+      // Si estamos editando y no se seleccionó un nuevo archivo, no es necesario validar el archivo
+      if (this.isEditing) {
+        return requiredFields;
+      }
+      
+      // Si estamos agregando un nuevo elemento, se requiere un archivo
+      return requiredFields && this.selectedFile;
     },
     
-    formatDate(datestring, dateFormat) {
-      if (!datestring || datestring === '') return '';
-      return moment(datestring).format(dateFormat);
-    },
-    
-    login() {
-      this.$router.push({ 
-        name: 'login', 
-        params: { 
-          path: 'Detalle equipo', 
-          elementid: this.elementid 
-        } 
+    filteredElements() {
+      return this.elements.filter(element => {
+        // Filtrar por tipo
+        if (this.filterType && element.tipo !== this.filterType) {
+          return false;
+        }
+        
+        // Filtrar por estado
+        if (this.filterStatus && element.estado !== this.filterStatus) {
+          return false;
+        }
+        
+        // Filtrar por búsqueda
+        if (this.searchQuery) {
+          const query = this.searchQuery.toLowerCase();
+          return element.nombre.toLowerCase().includes(query) || 
+                 element.codigo.toLowerCase().includes(query);
+        }
+        
+        return true;
       });
     },
     
-    reportarFalla(comentarioFalla) {
-      if (!comentarioFalla || comentarioFalla.trim() === '') {
-        this.showNotification('warning', 'Advertencia', 'Debe ingresar una descripción de la falla');
+    elementCount() {
+      return this.elements.length;
+    },
+    
+    activeElementCount() {
+      return this.elements.filter(element => element.estado === 'activo').length;
+    },
+    
+    inactiveElementCount() {
+      return this.elements.filter(element => element.estado === 'inactivo').length;
+    }
+  },
+  methods: {
+    formatDate(timestamp) {
+      if (!timestamp) return 'N/A';
+      return moment(timestamp).format('DD-MM-YYYY');
+    },
+    
+    capitalizeFirst(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    
+    viewElement(element) {
+      this.selectedElement = element;
+      this.showViewElementModal = true;
+    },
+    
+    editElement(element) {
+      this.isEditing = true;
+      this.currentElement = { ...element };
+      this.selectedFile = null;
+      this.showViewElementModal = false;
+      this.showAddElementModal = true;
+    },
+    
+    confirmDeleteElement(element) {
+      this.selectedElement = element;
+      this.showDeleteConfirmModal = true;
+    },
+    
+    closeElementModal() {
+      this.showAddElementModal = false;
+      this.resetForm();
+    },
+    
+    resetForm() {
+      this.currentElement = {
+        codigo: '',
+        nombre: '',
+        tipo: '',
+        estado: 'activo',
+        descripcion: '',
+        fecha: null,
+        url: ''
+      };
+      this.selectedFile = null;
+      this.isEditing = false;
+    },
+    
+    saveElement() {
+      if (!this.isFormValid) return;
+      
+      const user = firebase.auth().currentUser;
+      if (!user) {
+        this.showToastNotification('error', 'Error', 'Debe iniciar sesión para realizar esta acción');
         return;
       }
       
-      console.log('reportarFalla::inventario/%s/%s', this.SE, this.elementid);
+      // Si estamos editando y no hay un nuevo archivo, actualizamos solo los datos
+      if (this.isEditing && !this.selectedFile) {
+        this.updateElementData();
+        return;
+      }
       
-      let fechaReporte = Date.now();
+      // Si hay un archivo (nuevo elemento o actualización con nuevo archivo), subimos el archivo primero
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(`elementos/${Date.now()}_${this.selectedFile.name}`);
       
-      firebase.database().ref('inventario/' + this.SE + '/' + this.elementid)
-        .update({ falla: true, fechaFalla: fechaReporte })
+      fileRef.put(this.selectedFile).then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+      }).then(downloadURL => {
+        if (this.isEditing) {
+          // Si estamos editando, actualizamos con la nueva URL
+          this.currentElement.url = downloadURL;
+          this.updateElementData();
+        } else {
+          // Si es un nuevo elemento, creamos con la URL
+          const elementData = {
+            ...this.currentElement,
+            fecha: Date.now(),
+            url: downloadURL,
+            createdBy: user.email
+          };
+          
+          firebase.database().ref('elementos').push(elementData)
+            .then(() => {
+              this.showToastNotification('success', 'Éxito', 'Elemento creado correctamente');
+              this.showAddElementModal = false;
+              this.resetForm();
+              this.loadElements();
+            })
+            .catch(error => {
+              console.error('Error creating element:', error);
+              this.showToastNotification('error', 'Error', 'No se pudo crear el elemento');
+            });
+        }
+      }).catch(error => {
+        console.error('Error uploading file:', error);
+        this.showToastNotification('error', 'Error', 'No se pudo subir el archivo');
+      });
+    },
+    
+    updateElementData() {
+      const elementData = {
+        ...this.currentElement,
+        updatedAt: Date.now()
+      };
+      
+      // Eliminar el ID antes de actualizar
+      const elementId = elementData.id;
+      delete elementData.id;
+      
+      firebase.database().ref(`elementos/${elementId}`).update(elementData)
         .then(() => {
-          const numSolicitud = String(fechaReporte).slice(0, 10);
-          
-          // Crear solicitud
-          var newPost = firebase.database().ref('solicitudes').push();
-          newPost.set({
-            numSolicitud: numSolicitud,
-            elementid: this.elementid,
-            fecha: fechaReporte,
-            estado: 'pendiente',
-            reporteFalla: comentarioFalla,
-            reportadoPor: this.userDisplayName,
-            ...this.datosEquipo
-          });
-          
-          // Agregar al historial
-          var newHistoryPost = firebase.database().ref('inventario/' + this.SE + '/' + this.elementid + '/historial').push();
-          newHistoryPost.set({
-            fecha: fechaReporte,
-            estado: 'Falla',
-            observacion: 'Se genera una solicitud de ejecución de garantía (solicitud nº ' + numSolicitud + ')',
-            user: this.userDisplayName,
-          });
-          
-          this.showNotification('success', 'Falla reportada', 
-            'Se ha generado las solicitud ' + numSolicitud + ' al area de soporte, asignada a ' 
-            + this.datosEquipo.ingenieroContrato + ' (' + this.datosEquipo.mailIngenieroContrato + ')');
-          
-          $('#reportarFallaModal').modal('hide');
-          this.observacion = '';
+          this.showToastNotification('success', 'Éxito', 'Elemento actualizado correctamente');
+          this.showAddElementModal = false;
+          this.resetForm();
+          this.loadElements();
         })
         .catch(error => {
-          console.error('Error al reportar falla:', error);
-          this.showNotification('error', 'Error', 'No se pudo reportar la falla. Intente nuevamente.');
+          console.error('Error updating element:', error);
+          this.showToastNotification('error', 'Error', 'No se pudo actualizar el elemento');
         });
     },
     
-    agregarComentario(comentario, estado) {
-      if (!comentario || comentario.trim() === '') {
-        this.showNotification('warning', 'Advertencia', 'Debe ingresar un comentario');
-        return;
-      }
-      
-      console.log('agregarComentario::inventario/%s/%s', this.SE, this.elementid);
-      
-      var newPost = firebase.database().ref('inventario/' + this.SE + '/' + this.elementid + '/historial').push();
-      newPost.set({
-        fecha: Date.now(),
-        estado: estado,
-        observacion: comentario,
-        user: this.userDisplayName,
-      })
-      .then(() => {
-        this.showNotification('success', 'Comentario agregado', 'El comentario ha sido agregado correctamente');
-        $('#agregarComentarioModal').modal('hide');
-        this.observacion = '';
-      })
-      .catch(error => {
-        console.error('Error al agregar comentario:', error);
-        this.showNotification('error', 'Error', 'No se pudo agregar el comentario. Intente nuevamente.');
-      });
+    deleteElement() {
+      firebase.database().ref(`elementos/${this.selectedElement.id}`).remove()
+        .then(() => {
+          this.showToastNotification('success', 'Éxito', 'Elemento eliminado correctamente');
+          this.showDeleteConfirmModal = false;
+          this.loadElements();
+        })
+        .catch(error => {
+          console.error('Error deleting element:', error);
+          this.showToastNotification('error', 'Error', 'No se pudo eliminar el elemento');
+        });
     },
     
-    downloadFile(event) {
-      console.log('downloadFile--------');
-      const fileData = JSON.parse(event.currentTarget.id);
-      
-      // Crear un enlace temporal para la descarga
-      const a = document.createElement('a');
-      a.href = fileData.downloadLink;
-      a.download = fileData.nombreArchivo;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    },
-    
-    showUploadFiles(event) {
-      console.log('showUploadFiles---------' + event.currentTarget.id);
-      
-      this.listUploadedFiles = [];
-      
-      try {
-        const items = JSON.parse(event.currentTarget.id);
-        
-        if (items && items.length > 0) {
-          items.forEach(element => {
-            this.listUploadedFiles.push({
-              NombreArchivo: element.nombre,
-              CategoriaArchivo: element.categoria,
-              FechaCarga: this.formatDate(element.fecha, 'DD-MM-YYYY'),
-              LinkArchivo: JSON.stringify({
-                downloadLink: element.url,
-                nombreArchivo: element.nombre
-              }),
+    loadElements() {
+      firebase.database().ref('elementos').once('value')
+        .then(snapshot => {
+          const elements = [];
+          snapshot.forEach(childSnapshot => {
+            elements.push({
+              id: childSnapshot.key,
+              ...childSnapshot.val()
             });
           });
-        }
-        
-        $('#archivosModal').modal('show');
-      } catch (error) {
-        console.error('Error al procesar archivos:', error);
-        this.showNotification('error', 'Error', 'No se pudieron cargar los archivos');
-      }
+          this.elements = elements.sort((a, b) => b.fecha - a.fecha);
+        })
+        .catch(error => {
+          console.error('Error loading elements:', error);
+          this.showToastNotification('error', 'Error', 'Error al cargar los elementos');
+        });
     },
     
-    showNotification(type, title, message) {
-      // Esta función simula una notificación, en una implementación real
-      // se usaría un componente de notificación o toast
-      alert(`${title}: ${message}`);
-    },
-    
-    generateQRCode() {
-      const url = 'https://misig-lat.web.app/#/element/' + this.elementid;
+    showToastNotification(severity, title, message) {
+      this.toastTitle = title;
+      this.toastMessage = message;
       
-      QRCode.toDataURL(url, { 
-        width: 200,
-        margin: 2,
-        color: {
-          dark: '#000000',
-          light: '#ffffff'
-        }
-      })
-      .then(url => {
-        this.qrImageUrl = url;
-      })
-      .catch(err => {
-        console.error('Error generando QR code:', err);
-      });
+      if (severity === 'success') {
+        this.toastClass = 'bg-success';
+      } else if (severity === 'error') {
+        this.toastClass = 'bg-danger';
+      } else if (severity === 'info') {
+        this.toastClass = 'bg-info';
+      } else {
+        this.toastClass = 'bg-primary';
+      }
+      
+      this.showToast = true;
+      
+      // Auto hide after 5 seconds
+      setTimeout(() => {
+        this.showToast = false;
+      }, 5000);
     }
   },
   mounted() {
-    // Generar código QR
-    this.generateQRCode();
-    
-    // Cargar datos del equipo
-    firebase.database().ref('inventario/' + this.SE + '/' + this.elementid).once('value')
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          this.datosEquipo = snapshot.val();
-          console.log('Datos del equipo cargados:', this.datosEquipo);
-          
-          // Convertir el historial de objeto a array si existe
-          if (this.datosEquipo.historial && typeof this.datosEquipo.historial === 'object' && !Array.isArray(this.datosEquipo.historial)) {
-            const historialArray = [];
-            Object.keys(this.datosEquipo.historial).forEach(key => {
-              historialArray.push({
-                id: key,
-                ...this.datosEquipo.historial[key]
-              });
-            });
-            this.datosEquipo.historial = historialArray.sort((a, b) => b.fecha - a.fecha);
-          } else if (!this.datosEquipo.historial) {
-            this.datosEquipo.historial = [];
-          }
-        } else {
-          console.log('No se encontraron datos para el equipo con ID:', this.elementid);
-          this.showNotification('warning', 'Advertencia', 'No se encontraron datos para este equipo');
-        }
-      })
-      .catch((error) => {
-        console.error('Error al cargar datos del equipo:', error);
-        this.showNotification('error', 'Error', 'No se pudieron cargar los datos del equipo');
-      });
-    
-    // Verificar si el usuario está autenticado
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.useremail = user.email;
-        console.log('Usuario autenticado:', user.email);
-        
-        getUserKeyAndType(user.email, (userKey, usertype, data) => {
-          if (data && data.nombres && data.apellidos) {
-            this.userDisplayName = data.nombres + ' ' + data.apellidos;
-          } else {
-            this.userDisplayName = user.email;
-          }
-        });
-      } else {
-        console.log('Usuario no autenticado');
-      }
-    });
+    this.loadElements();
   }
 };
 </script>
 
 <style scoped>
-.form-control-static {
-  font-weight: 600;
-  margin-bottom: 0;
-}
-
-.text-capitalize {
-  text-transform: capitalize;
-}
-
 .badge {
-  font-size:
+  font-size: 0.8rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.modal-backdrop {
+  opacity: 0.5;
+}
+
+.toast {
+  min-width: 250px;
+}
+
+.toast-header {
+  color: white;
+}
+</style>
