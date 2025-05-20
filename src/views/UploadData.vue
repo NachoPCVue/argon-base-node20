@@ -7,7 +7,7 @@
 <script>
 // http://localhost:8080/#/uploaddata/4rD24Tw3prJ5Vwuu1j1PoxZwAx7QUTbb7b81erFnPovwtrqETZMk6E4QbvOfLcLnQGnHdaeJ5K3pnBJj6DOZVg==/300.5
 // Charts
-import { auth, database } from "@/main";
+import { auth, database } from "@/firebase";
 import { ref, onValue } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 

@@ -82,7 +82,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { auth, database } from "@/main";
+import { auth, database } from "@/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref as dbRef, set } from "firebase/database";
 

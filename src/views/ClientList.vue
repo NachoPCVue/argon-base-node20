@@ -428,9 +428,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
+import { auth, database } from '@/firebase.js'
 
 export default {
   name: 'ClientList',
@@ -605,7 +603,7 @@ export default {
         return;
       }
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para realizar esta acción');
         return;
@@ -617,7 +615,7 @@ export default {
         const clientData = { ...this.currentClient };
         delete clientData.id;
         
-        firebase.database().ref(`clientes/${clientId}`).update(clientData)
+        database().ref(`clientes/${clientId}`).update(clientData)
           .then(() => {
             // Actualizar en la lista local
             const index = this.clients.findIndex(c => c.id === clientId);
@@ -641,7 +639,7 @@ export default {
           createdBy: user.email
         };
         
-        firebase.database().ref('clientes').push(clientData)
+        database().ref('clientes').push(clientData)
           .then(ref => {
             // Agregar a la lista local
             this.clients.push({
@@ -667,7 +665,7 @@ export default {
         return;
       }
       
-      firebase.database().ref(`clientes/${this.selectedClient.id}`).remove()
+      database().ref(`clientes/${this.selectedClient.id}`).remove()
         .then(() => {
           // Eliminar de la lista local
           this.clients = this.clients.filter(c => c.id !== this.selectedClient.id);
@@ -682,7 +680,7 @@ export default {
     },
     
     loadClients() {
-      firebase.database().ref('clientes').once('value')
+      database().ref('clientes').once('value')
         .then(snapshot => {
           const clients = [];
           snapshot.forEach(childSnapshot => {

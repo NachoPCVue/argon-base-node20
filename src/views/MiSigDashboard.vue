@@ -121,7 +121,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import { getActivosGarantias } from "@/model/functions";
-import { auth } from "@/main";
+import { auth } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default {

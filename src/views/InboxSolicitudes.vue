@@ -342,10 +342,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/storage';
-import 'firebase/auth';
+import { auth, database, storage } from '@/firebase.js'
 import moment from 'moment';
 
 export default {
@@ -533,7 +530,7 @@ export default {
         return;
       }
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para agregar comentarios');
         return;
@@ -552,7 +549,7 @@ export default {
       
       this.selectedRequest.comments.push(comment);
       
-      firebase.database().ref(`solicitudes/${this.selectedRequest.id}/comments`).set(this.selectedRequest.comments)
+      database().ref(`solicitudes/${this.selectedRequest.id}/comments`).set(this.selectedRequest.comments)
         .then(() => {
           this.newComment = '';
           this.showToastNotification('success', 'Éxito', 'Comentario agregado correctamente');
@@ -564,7 +561,7 @@ export default {
     },
     
     approveRequest() {
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para aprobar solicitudes');
         return;
@@ -584,7 +581,7 @@ export default {
       this.selectedRequest.comments.push(comment);
       this.selectedRequest.status = 'approved';
       
-      firebase.database().ref(`solicitudes/${this.selectedRequest.id}`).update({
+      database().ref(`solicitudes/${this.selectedRequest.id}`).update({
         status: 'approved',
         comments: this.selectedRequest.comments
       })
@@ -598,7 +595,7 @@ export default {
     },
     
     rejectRequest() {
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para rechazar solicitudes');
         return;
@@ -618,7 +615,7 @@ export default {
       this.selectedRequest.comments.push(comment);
       this.selectedRequest.status = 'rejected';
       
-      firebase.database().ref(`solicitudes/${this.selectedRequest.id}`).update({
+      database().ref(`solicitudes/${this.selectedRequest.id}`).update({
         status: 'rejected',
         comments: this.selectedRequest.comments
       })
@@ -637,7 +634,7 @@ export default {
         return;
       }
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para enviar solicitudes');
         return;
@@ -649,7 +646,7 @@ export default {
       
       if (this.selectedFiles.length > 0) {
         this.selectedFiles.forEach(file => {
-          const storageRef = firebase.storage().ref();
+          const storageRef = storage().ref();
           const fileRef = storageRef.child(`solicitudes/${Date.now()}_${file.name}`);
           
           const uploadPromise = fileRef.put(file).then(snapshot => {
@@ -683,7 +680,7 @@ export default {
             }]
           };
           
-          return firebase.database().ref('solicitudes').push(requestData);
+          return database().ref('solicitudes').push(requestData);
         })
         .then((ref) => {
           // Agregar el ID al objeto para que esté disponible en la lista
@@ -724,7 +721,7 @@ export default {
     },
     
     loadRequests() {
-      firebase.database().ref('solicitudes').once('value')
+      database().ref('solicitudes').once('value')
         .then(snapshot => {
           const requests = [];
           snapshot.forEach(childSnapshot => {

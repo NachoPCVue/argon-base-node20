@@ -6,7 +6,7 @@
 </template>
 
 <script>
-// import { database, storage } from "@/main"; // Removed unused imports
+// import { database, storage } from "@/firebase"; // Removed unused imports
 import VuePdfEmbed from 'vue-pdf-embed';
 import 'primeflex/primeflex.css';
 

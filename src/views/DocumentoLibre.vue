@@ -272,9 +272,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
+import { auth, database } from '@/firebase.js'
 import moment from 'moment';
 
 export default {
@@ -438,7 +436,7 @@ export default {
         return;
       }
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para guardar documentos');
         return;
@@ -454,7 +452,7 @@ export default {
         documentData.createdAt = now;
         documentData.createdBy = user.email;
         
-        firebase.database().ref('documentos-libres').push(documentData)
+        database().ref('documentos-libres').push(documentData)
           .then((ref) => {
             this.document.id = ref.key;
             this.isNewDocument = false;
@@ -468,7 +466,7 @@ export default {
         const documentId = documentData.id;
         delete documentData.id;
         
-        firebase.database().ref(`documentos-libres/${documentId}`).update(documentData)
+        database().ref(`documentos-libres/${documentId}`).update(documentData)
           .then(() => {
             this.document.id = documentId;
             this.showToastNotification('success', 'Éxito', 'Documento actualizado correctamente');
@@ -487,7 +485,7 @@ export default {
         return;
       }
       
-      firebase.database().ref(`documentos-libres/${this.document.id}`).remove()
+      database().ref(`documentos-libres/${this.document.id}`).remove()
         .then(() => {
           this.showToastNotification('success', 'Éxito', 'Documento eliminado correctamente');
           this.showDeleteConfirmModal = false;
@@ -529,7 +527,7 @@ export default {
     },
     
     loadDocument(id) {
-      firebase.database().ref(`documentos-libres/${id}`).once('value')
+      database().ref(`documentos-libres/${id}`).once('value')
         .then(snapshot => {
           if (snapshot.exists()) {
             const documentData = snapshot.val();
@@ -578,7 +576,7 @@ export default {
     }
     
     // Si el usuario está autenticado, establecer el autor
-    const user = firebase.auth().currentUser;
+    const user = auth().currentUser;
     if (user) {
       this.document.author = user.displayName || user.email;
     }

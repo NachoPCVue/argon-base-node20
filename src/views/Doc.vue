@@ -333,10 +333,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/storage';
-import 'firebase/auth';
+import { auth, database, storage } from '@/firebase.js'
 import moment from 'moment';
 
 export default {
@@ -495,7 +492,7 @@ export default {
     saveDocument() {
       if (!this.isFormValid) return;
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para realizar esta acción');
         return;
@@ -508,7 +505,7 @@ export default {
       }
       
       // Si hay un archivo (nuevo documento o actualización con nuevo archivo), subimos el archivo primero
-      const storageRef = firebase.storage().ref();
+      const storageRef = storage().ref();
       const fileRef = storageRef.child(`documentos/${Date.now()}_${this.selectedFile.name}`);
       
       fileRef.put(this.selectedFile).then(snapshot => {
@@ -527,7 +524,7 @@ export default {
             createdBy: user.email
           };
           
-          firebase.database().ref('documentos').push(documentData)
+          database().ref('documentos').push(documentData)
             .then(() => {
               this.showToastNotification('success', 'Éxito', 'Documento creado correctamente');
               this.showAddDocumentModal = false;
@@ -555,7 +552,7 @@ export default {
       const documentId = documentData.id;
       delete documentData.id;
       
-      firebase.database().ref(`documentos/${documentId}`).update(documentData)
+      database().ref(`documentos/${documentId}`).update(documentData)
         .then(() => {
           this.showToastNotification('success', 'Éxito', 'Documento actualizado correctamente');
           this.showAddDocumentModal = false;
@@ -569,7 +566,7 @@ export default {
     },
     
     deleteDocument() {
-      firebase.database().ref(`documentos/${this.selectedDocument.id}`).remove()
+      database().ref(`documentos/${this.selectedDocument.id}`).remove()
         .then(() => {
           this.showToastNotification('success', 'Éxito', 'Documento eliminado correctamente');
           this.showDeleteConfirmModal = false;
@@ -582,7 +579,7 @@ export default {
     },
     
     loadDocuments() {
-      firebase.database().ref('documentos').once('value')
+      database().ref('documentos').once('value')
         .then(snapshot => {
           const documents = [];
           snapshot.forEach(childSnapshot => {

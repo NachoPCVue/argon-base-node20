@@ -381,10 +381,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/storage';
-import 'firebase/auth';
+import { auth, database, storage } from '@/firebase.js'
 import moment from 'moment';
 
 export default {
@@ -466,13 +463,13 @@ export default {
     uploadDocument() {
       if (!this.isFormValid) return;
       
-      const user = firebase.auth().currentUser;
+      const user = auth().currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para subir documentos');
         return;
       }
       
-      const storageRef = firebase.storage().ref();
+      const storageRef = storage().ref();
       const fileRef = storageRef.child(`otros/${Date.now()}_${this.selectedFile.name}`);
       
       fileRef.put(this.selectedFile).then(snapshot => {
@@ -487,7 +484,7 @@ export default {
           createdBy: user.email
         };
         
-        return firebase.database().ref('otros').push(docData);
+        return database().ref('otros').push(docData);
       }).then(() => {
         this.showToastNotification('success', 'Éxito', 'Documento subido correctamente');
         this.showAddDocumentModal = false;
@@ -511,7 +508,7 @@ export default {
     },
     
     loadDocuments() {
-      firebase.database().ref('otros').once('value')
+      database().ref('otros').once('value')
         .then(snapshot => {
           const docs = [];
           snapshot.forEach(childSnapshot => {

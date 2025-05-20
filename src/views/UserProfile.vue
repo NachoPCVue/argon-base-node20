@@ -145,7 +145,7 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { auth, database } from "@/main";
+import { auth, database } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref as dbRef, get, update } from "firebase/database";
 

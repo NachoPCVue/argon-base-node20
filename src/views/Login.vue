@@ -65,7 +65,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { auth } from "@/main";
+import { auth } from "@/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default {

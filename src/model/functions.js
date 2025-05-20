@@ -1,4 +1,4 @@
-import { database } from "@/main";
+import { database } from "@/firebase";
 import { ref, onValue, get, query, orderByChild, equalTo } from "firebase/database";
 
 export function getActivosGarantias(SE, callback) {

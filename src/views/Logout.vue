@@ -26,7 +26,7 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { auth } from "@/main";
+import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 
 export default {

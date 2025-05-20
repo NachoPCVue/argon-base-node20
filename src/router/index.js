@@ -11,8 +11,8 @@ import Signin from "../views/Signin.vue";
 // Imported views from gc-hub-MiSig
 import MiSigDashboard from "../views/MiSigDashboard.vue";
 import UserProfile from "../views/UserProfile.vue";
-import Element from "../views/Element.vue";
-import Doc from "../views/Doc.vue";
+//import Element from "../views/Element.vue";
+//import Doc from "../views/Doc.vue";
 import DocumentoLibre from "../views/DocumentoLibre.vue";
 import InboxSolicitudes from "../views/InboxSolicitudes.vue";
 import ClientList from "../views/ClientList.vue";
@@ -27,7 +27,7 @@ import Otros from "../views/Otros.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import Register from "../views/Register.vue";
-import Photo from "../views/Photo.vue";
+//import Photo from "../views/Photo.vue";
 import UploadData from "../views/UploadData.vue";
 import OpenPdf from "../views/OpenPdf.vue";
 
@@ -35,7 +35,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard-default",
+    redirect: "/login",
   },
   {
     path: "/dashboard-default",
@@ -89,24 +89,24 @@ const routes = [
     name: "User Profile",
     component: UserProfile,
   },
-  {
+  /*{
     path: "/element/:elementid",
     name: "Detalle equipo",
     component: Element,
     props: true
-  },
-  {
+  },*/
+  /*{
     path: "/cl/:elementid",
     name: "Datos equipo",
     component: Element,
     props: true
-  },
-  {
+  },*/
+  /*{
     path: "/doc/:elementid",
     name: "Carta de garantía",
     component: Doc,
     props: true
-  },
+  },*/
   {
     path: "/solicitudes",
     name: "Solicitudes",
@@ -162,11 +162,11 @@ const routes = [
     name: "Documento Libre",
     component: DocumentoLibre,
   },
-  {
+  /*{
     path: "/photo",
     name: "Photo",
     component: Photo,
-  },
+  },*/
   {
     path: "/login",
     name: "Login",
