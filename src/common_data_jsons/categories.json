@@ -1,0 +1,63 @@
+[
+    {
+      "categoria": "Contexto de la organización",
+      "subcategorias": [
+        "FODA",
+        "Partes interesadas",
+        "Alcance",
+        "Mapa de procesos"
+      ]
+    },
+    {
+      "categoria": "Liderazgo",
+      "subcategorias": [
+        "Política integrada",
+        "Organigrama",
+        "Participación y consulta"
+      ]
+    },
+    {
+      "categoria": "Planificación",
+      "subcategorias": [
+        "Riesgos y oportunidades",
+        "Matriz de aspectos e impactos ambientales",
+        "Identificación de requisitos legales y otros requisitos",
+        "Objetivos del SGI",
+        "Planificación de cambios"
+      ]
+    },
+    {
+      "categoria": "Apoyo",
+      "subcategorias": [
+        "Ambiente para los procesos",
+        "Equipos y mantención",
+        "Competencias",
+        "Comunicación",
+        "Información documentada"
+      ]
+    },
+    {
+      "categoria": "Operación",
+      "subcategorias": [
+        "Diseño y desarrollo",
+        "Compras y evaluación de proveedores",
+        "Satisfacción del cliente",
+        "Procedimientos operativos",
+        "Emergencias"
+      ]
+    },
+    {
+      "categoria": "Evaluación del desempeño",
+      "subcategorias": [
+        "Auditoría interna",
+        "Revisión por la dirección"
+      ]
+    },
+    {
+      "categoria": "Mejora",
+      "subcategorias": [
+        "Incidentes, no conformidades y acciones correctivas",
+        "Levantamiento de no conformidad"
+      ]
+    }
+  ]
