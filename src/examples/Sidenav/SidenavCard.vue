@@ -26,23 +26,6 @@ defineProps({
     class="card card-plain shadow-none"
     id="sidenavCard"
   >
-    <div class="p-3 card-body text-center w-100 pt-0">
-      <img
-        class="w-50 mx-auto"
-        src="@/assets/img/illustrations/icon-documentation.svg"
-        alt="sidebar_illustration"
-      />
-
-      <h6 v-if="isRTL" class="mb-0 text-dark up">تحتاج مساعدة ؟</h6>
-
-      <h6 v-else class="mb-0 text-dark up">Need Help ?</h6>
-
-      <p v-if="isRTL" class="text-xs font-weight-bold">
-        يرجى التحقق من مستنداتنا
-      </p>
-
-      <p v-else class="text-xs font-weight-bold">Please check our docs</p>
-    </div>
 
     <a
       v-if="isRTL"

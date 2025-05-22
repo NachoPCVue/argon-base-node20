@@ -31,6 +31,7 @@ import Register from "../views/Register.vue";
 //import Photo from "../views/Photo.vue";
 import UploadData from "../views/UploadData.vue";
 import OpenPdf from "../views/OpenPdf.vue";
+import FlowEx from "../views/FlowEx.vue";
 
 const routes = [
   {
@@ -198,6 +199,11 @@ const routes = [
     name: "Open PDF",
     component: OpenPdf,
     props: true
+  },
+  {
+    path: "/flow-ex",
+    name: "Flow Diagram",
+    component: FlowEx
   },
 ];
 

@@ -17,8 +17,12 @@ import Button from 'primevue/button';
 import ToastService from "primevue/toastservice";
 import VueApexCharts from "vue3-apexcharts";
 
-import { auth } from './firebase.js'
-import { onAuthStateChanged } from 'firebase/auth'
+/*import { auth } from './firebase.js'
+import { onAuthStateChanged } from 'firebase/auth'*/
+
+import VueFlow from '@vue-flow/core';
+import '@vue-flow/core/dist/style.css';
+import '@vue-flow/core/dist/theme-default.css';
 
 // PrimeVue styles will be imported when installed
 // import 'primevue/resources/themes/saga-blue/theme.css';
@@ -46,13 +50,15 @@ appInstance.component('DataTable', DataTable);
 appInstance.component('InputText', InputText);
 appInstance.component('Column', Column);
 appInstance.component('PrimeButton', Button);
+
+appInstance.use(VueFlow);
+
 appInstance.mount("#app");
-onAuthStateChanged(auth, () => {
+/*onAuthStateChanged(auth, () => {
   if (!appInstance) {
     appInstance = createApp(App)
       .use(router)
       .mount('#app')
-      console.log("Mounted");
   }
-})
+})*/
 

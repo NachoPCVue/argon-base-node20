@@ -23,6 +23,7 @@
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@influxdata/influxdb-client": "^1.14.0",
     "@popperjs/core": "2.11.8",
+    "@vue-flow/core": "^1.44.0",
     "apexcharts": "^4.7.0",
     "axios": "^0.27.2",
     "bootstrap": "5.3.3",

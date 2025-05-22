@@ -1,15 +1,15 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useStore } from "vuex";
+//import { useStore } from "vuex";
 import { auth } from "@/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 
 import SidenavItem from "./SidenavItem.vue";
 import SidenavCard from "./SidenavCard.vue";
 
-const store = useStore();
-const isRTL = computed(() => store.state.isRTL);
+//const store = useStore();
+//const isRTL = computed(() => store.state.isRTL);
 const userEmail = ref(null);
 const userType = ref(null);
 const showAdminView = ref(false);
@@ -56,19 +56,6 @@ const isSparkUser = computed(() => {
     id="sidenav-collapse-main"
   >
     <ul class="navbar-nav">
-      <!-- Original Argon Dashboard Menu Items -->
-      <li class="nav-item">
-        <sidenav-item
-          to="/dashboard-default"
-          :class="getRoute() === 'dashboard-default' ? 'active' : ''"
-          :navText="isRTL ? 'لوحة القيادة' : 'Dashboard'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-
       <!-- MiSig Menu Items -->
       <template v-if="userEmail">
         <!-- Dev user toggle switch -->
@@ -244,6 +231,17 @@ const isSparkUser = computed(() => {
           </li>
           <li class="nav-item">
             <sidenav-item
+              to="/flow-ex"
+              :class="getRoute() === 'flow-ex' ? 'active' : ''"
+              navText="Flow Diagram"
+            >
+              <template v-slot:icon>
+                <i class="ni ni-vector text-purple text-sm opacity-10"></i>
+              </template>
+            </sidenav-item>
+          </li>
+          <li class="nav-item">
+            <sidenav-item
               to="/logout"
               :class="getRoute() === 'logout' ? 'active' : ''"
               navText="Logout"
@@ -353,6 +351,17 @@ const isSparkUser = computed(() => {
             >
               <template v-slot:icon>
                 <i class="ni ni-single-copy-04 text-primary text-sm opacity-10"></i>
+              </template>
+            </sidenav-item>
+          </li>
+          <li class="nav-item">
+            <sidenav-item
+              to="/flow-ex"
+              :class="getRoute() === 'flow-ex' ? 'active' : ''"
+              navText="Flow Diagram"
+            >
+              <template v-slot:icon>
+                <i class="ni ni-vector text-purple text-sm opacity-10"></i>
               </template>
             </sidenav-item>
           </li>
