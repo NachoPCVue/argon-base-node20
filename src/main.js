@@ -26,6 +26,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 // import 'primeicons/primeicons.css';
 
 let appInstance = createApp(App);
+//console.log("appInstanced");
 
 const site = "MiSig";
 appInstance.config.globalProperties.site = site;
@@ -45,13 +46,13 @@ appInstance.component('DataTable', DataTable);
 appInstance.component('InputText', InputText);
 appInstance.component('Column', Column);
 appInstance.component('PrimeButton', Button);
-
-//appInstance.mount("#app");
+appInstance.mount("#app");
 onAuthStateChanged(auth, () => {
   if (!appInstance) {
     appInstance = createApp(App)
       .use(router)
       .mount('#app')
+      console.log("Mounted");
   }
 })
 

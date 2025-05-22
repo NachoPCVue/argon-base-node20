@@ -1,8 +1,9 @@
 <template>
-  <div class="container my-5">
+  <div class="login-container">
+    <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-5 col-md-7">
-        <div class="card bg-secondary border-0 mb-0">
+        <div class="card bg-light border-0 mb-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-center">
               <h1 class="text-dark">MiSig</h1>
@@ -52,15 +53,24 @@
             </a>
           </div>
           <div class="col-6 text-right">
-            <router-link to="/register" class="text-light">
-              <small>Crear nueva cuenta</small>
-            </router-link>
+            <!-- "Crear nueva cuenta" link hidden as requested -->
           </div>
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.login-container {
+  background: linear-gradient(to bottom, #00049B 60%, white 60%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 
 <script>
 import { ref } from "vue";

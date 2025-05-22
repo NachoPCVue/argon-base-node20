@@ -61,7 +61,7 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Subcapítulos</h3>
+                  <h3 class="mb-0">{{ getActiveTabTitle() }}</h3>
                 </div>
                 <div class="col-4 text-right">
                   <a href="#" class="btn btn-sm btn-primary" @click.prevent="showAddDocumentModal = true">Agregar documento</a>
@@ -69,128 +69,139 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="accordion" id="accordionLiderazgo">
-                <!-- 5.1 Liderazgo y compromiso -->
-                <div class="card mb-3">
-                  <div class="card-header" id="heading51">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse51" aria-expanded="true" aria-controls="collapse51">
-                        5.1 Liderazgo y compromiso
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapse51" class="collapse show" aria-labelledby="heading51" data-parent="#accordionLiderazgo">
-                    <div class="card-body">
-                      <p>La alta dirección debe demostrar liderazgo y compromiso con respecto al sistema de gestión de la calidad y al enfoque al cliente.</p>
-                      
-                      <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                          <thead class="thead-light">
-                            <tr>
-                              <th scope="col">Documento</th>
-                              <th scope="col">Fecha</th>
-                              <th scope="col">Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(doc, index) in getDocumentsBySection('5.1')" :key="index">
-                              <td>{{ doc.nombre }}</td>
-                              <td>{{ formatDate(doc.fecha) }}</td>
-                              <td>
-                                <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
-                                  <i class="ni ni-single-copy-04"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr v-if="getDocumentsBySection('5.1').length === 0">
-                              <td colspan="3" class="text-center">No hay documentos disponibles.</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+              <!-- Pestañas -->
+              <ul class="nav nav-tabs" id="liderazgoTabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link" :class="{ active: activeTab === 'liderazgoCompromiso' }" id="liderazgoCompromiso-tab" data-toggle="tab" href="#liderazgoCompromiso" role="tab" @click="activeTab = 'liderazgoCompromiso'">
+                    5.1 Liderazgo y compromiso
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" :class="{ active: activeTab === 'politica' }" id="politica-tab" data-toggle="tab" href="#politica" role="tab" @click="activeTab = 'politica'">
+                    5.2 Política
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" :class="{ active: activeTab === 'roles' }" id="roles-tab" data-toggle="tab" href="#roles" role="tab" @click="activeTab = 'roles'">
+                    5.3 Roles y responsabilidades
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" :class="{ active: activeTab === 'contextoOrganizacion' }" id="contextoOrganizacion-tab" data-toggle="tab" href="#contextoOrganizacion" role="tab" @click="activeTab = 'contextoOrganizacion'">
+                    Contexto Organización
+                  </a>
+                </li>
+              </ul>
+              
+              <!-- Contenido de las pestañas -->
+              <div class="tab-content" id="liderazgoTabContent">
+                <!-- Pestaña 5.1 Liderazgo y compromiso -->
+                <div class="tab-pane fade" :class="{ 'show active': activeTab === 'liderazgoCompromiso' }" id="liderazgoCompromiso" role="tabpanel">
+                  <div class="mt-4">
+                    <p>La alta dirección debe demostrar liderazgo y compromiso con respecto al sistema de gestión de la calidad y al enfoque al cliente.</p>
+                    
+                    <div class="table-responsive">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(doc, index) in getDocumentsBySection('5.1')" :key="index">
+                            <td>{{ doc.nombre }}</td>
+                            <td>{{ formatDate(doc.fecha) }}</td>
+                            <td>
+                              <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
+                                <i class="ni ni-single-copy-04"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr v-if="getDocumentsBySection('5.1').length === 0">
+                            <td colspan="3" class="text-center">No hay documentos disponibles.</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
                 
-                <!-- 5.2 Política -->
-                <div class="card mb-3">
-                  <div class="card-header" id="heading52">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse52" aria-expanded="false" aria-controls="collapse52">
-                        5.2 Política
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapse52" class="collapse" aria-labelledby="heading52" data-parent="#accordionLiderazgo">
-                    <div class="card-body">
-                      <p>La alta dirección debe establecer, implementar y mantener una política de la calidad, y asegurarse de que se comunique y se entienda dentro de la organización.</p>
-                      
-                      <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                          <thead class="thead-light">
-                            <tr>
-                              <th scope="col">Documento</th>
-                              <th scope="col">Fecha</th>
-                              <th scope="col">Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(doc, index) in getDocumentsBySection('5.2')" :key="index">
-                              <td>{{ doc.nombre }}</td>
-                              <td>{{ formatDate(doc.fecha) }}</td>
-                              <td>
-                                <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
-                                  <i class="ni ni-single-copy-04"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr v-if="getDocumentsBySection('5.2').length === 0">
-                              <td colspan="3" class="text-center">No hay documentos disponibles.</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                <!-- Pestaña 5.2 Política -->
+                <div class="tab-pane fade" :class="{ 'show active': activeTab === 'politica' }" id="politica" role="tabpanel">
+                  <div class="mt-4">
+                    <p>La alta dirección debe establecer, implementar y mantener una política de la calidad, y asegurarse de que se comunique y se entienda dentro de la organización.</p>
+                    
+                    <div class="table-responsive">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(doc, index) in getDocumentsBySection('5.2')" :key="index">
+                            <td>{{ doc.nombre }}</td>
+                            <td>{{ formatDate(doc.fecha) }}</td>
+                            <td>
+                              <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
+                                <i class="ni ni-single-copy-04"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr v-if="getDocumentsBySection('5.2').length === 0">
+                            <td colspan="3" class="text-center">No hay documentos disponibles.</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
                 
-                <!-- 5.3 Roles, responsabilidades y autoridades en la organización -->
-                <div class="card mb-3">
-                  <div class="card-header" id="heading53">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse53" aria-expanded="false" aria-controls="collapse53">
-                        5.3 Roles, responsabilidades y autoridades en la organización
-                      </button>
-                    </h5>
+                <!-- Pestaña 5.3 Roles y responsabilidades -->
+                <div class="tab-pane fade" :class="{ 'show active': activeTab === 'roles' }" id="roles" role="tabpanel">
+                  <div class="mt-4">
+                    <p>La alta dirección debe asegurarse de que las responsabilidades y autoridades para los roles pertinentes se asignen, se comuniquen y se entiendan en toda la organización.</p>
+                    
+                    <div class="table-responsive">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(doc, index) in getDocumentsBySection('5.3')" :key="index">
+                            <td>{{ doc.nombre }}</td>
+                            <td>{{ formatDate(doc.fecha) }}</td>
+                            <td>
+                              <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
+                                <i class="ni ni-single-copy-04"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr v-if="getDocumentsBySection('5.3').length === 0">
+                            <td colspan="3" class="text-center">No hay documentos disponibles.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <div id="collapse53" class="collapse" aria-labelledby="heading53" data-parent="#accordionLiderazgo">
-                    <div class="card-body">
-                      <p>La alta dirección debe asegurarse de que las responsabilidades y autoridades para los roles pertinentes se asignen, se comuniquen y se entiendan en toda la organización.</p>
-                      
-                      <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                          <thead class="thead-light">
-                            <tr>
-                              <th scope="col">Documento</th>
-                              <th scope="col">Fecha</th>
-                              <th scope="col">Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(doc, index) in getDocumentsBySection('5.3')" :key="index">
-                              <td>{{ doc.nombre }}</td>
-                              <td>{{ formatDate(doc.fecha) }}</td>
-                              <td>
-                                <button class="btn btn-sm btn-info" @click="viewDocument(doc)">
-                                  <i class="ni ni-single-copy-04"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr v-if="getDocumentsBySection('5.3').length === 0">
-                              <td colspan="3" class="text-center">No hay documentos disponibles.</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                </div>
+                
+                <!-- Pestaña Contexto Organización -->
+                <div class="tab-pane fade" :class="{ 'show active': activeTab === 'contextoOrganizacion' }" id="contextoOrganizacion" role="tabpanel">
+                  <div class="mt-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="text-center py-5">
+                          <p class="text-muted">El contenido de esta sección será definido posteriormente.</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -344,6 +355,7 @@ export default {
   name: 'Liderazgo',
   data() {
     return {
+      activeTab: 'liderazgoCompromiso',
       documents: [],
       selectedDocument: {},
       newDocument: {
@@ -387,6 +399,21 @@ export default {
     }
   },
   methods: {
+    getActiveTabTitle() {
+      switch(this.activeTab) {
+        case 'liderazgoCompromiso':
+          return '5.1 Liderazgo y compromiso';
+        case 'politica':
+          return '5.2 Política';
+        case 'roles':
+          return '5.3 Roles, responsabilidades y autoridades';
+        case 'contextoOrganizacion':
+          return 'Contexto de la Organización';
+        default:
+          return 'Liderazgo';
+      }
+    },
+    
     formatDate(timestamp) {
       if (!timestamp) return 'N/A';
       return moment(timestamp).format('DD-MM-YYYY');
@@ -408,7 +435,7 @@ export default {
     uploadDocument() {
       if (!this.isFormValid) return;
       
-      const user = auth().currentUser;
+      const user = auth.currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para subir documentos');
         return;
@@ -429,7 +456,7 @@ export default {
           createdBy: user.email
         };
         
-        return database().ref('liderazgo').push(docData);
+        return database.ref('liderazgo').push(docData);
       }).then(() => {
         this.showToastNotification('success', 'Éxito', 'Documento subido correctamente');
         this.showAddDocumentModal = false;
@@ -453,7 +480,7 @@ export default {
     },
     
     loadDocuments() {
-      database().ref('liderazgo').once('value')
+      database.ref('liderazgo').once('value')
         .then(snapshot => {
           const docs = [];
           snapshot.forEach(childSnapshot => {
@@ -517,7 +544,35 @@ export default {
   background-color: #f6f9fc;
 }
 
-.accordion .card:not(:last-of-type) {
-  margin-bottom: 0.5rem;
+/* Estilos para mejorar la legibilidad de las pestañas */
+.nav-tabs {
+  background-color: #f8f9fa;
+  border-radius: 0.375rem;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: 0;
+}
+
+.nav-tabs .nav-link {
+  color: #525f7f;
+  background-color: #f8f9fa;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.15s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #e9ecef;
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+  color: #5e72e4;
+  background-color: #ffffff;
+  border-color: #dee2e6 #dee2e6 #ffffff;
+  font-weight: 600;
 }
 </style>

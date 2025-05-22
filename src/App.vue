@@ -15,21 +15,23 @@ Coded by www.creative-tim.com
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import Sidenav from "./examples/Sidenav";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
 
 const store = useStore();
+const route = useRoute();
 const isNavFixed = computed(() => store.state.isNavFixed);
 const darkMode = computed(() => store.state.darkMode);
 const isAbsolute = computed(() => store.state.isAbsolute);
-const showSidenav = computed(() => store.state.showSidenav);
+const showSidenav = computed(() => !route.meta.hideNav && store.state.showSidenav);
 const layout = computed(() => store.state.layout);
-const showNavbar = computed(() => store.state.showNavbar);
-const showFooter = computed(() => store.state.showFooter);
+const showNavbar = computed(() => !route.meta.hideNav && store.state.showNavbar);
+const showFooter = computed(() => !route.meta.hideNav && store.state.showFooter);
 const showConfig = computed(() => store.state.showConfig);
-const hideConfigButton = computed(() => store.state.hideConfigButton);
+const hideConfigButton = computed(() => store.state.hideConfigButton || route.meta.hideNav);
 const toggleConfigurator = () => store.commit("toggleConfigurator");
 
 const navClasses = computed(() => {

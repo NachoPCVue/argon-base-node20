@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { auth } from "@/firebase";
+import { auth } from "@/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 
 import SidenavItem from "./SidenavItem.vue";

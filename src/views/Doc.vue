@@ -492,7 +492,7 @@ export default {
     saveDocument() {
       if (!this.isFormValid) return;
       
-      const user = auth().currentUser;
+      const user = auth.currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para realizar esta acción');
         return;
@@ -524,7 +524,7 @@ export default {
             createdBy: user.email
           };
           
-          database().ref('documentos').push(documentData)
+          database.ref('documentos').push(documentData)
             .then(() => {
               this.showToastNotification('success', 'Éxito', 'Documento creado correctamente');
               this.showAddDocumentModal = false;
@@ -552,7 +552,7 @@ export default {
       const documentId = documentData.id;
       delete documentData.id;
       
-      database().ref(`documentos/${documentId}`).update(documentData)
+      database.ref(`documentos/${documentId}`).update(documentData)
         .then(() => {
           this.showToastNotification('success', 'Éxito', 'Documento actualizado correctamente');
           this.showAddDocumentModal = false;
@@ -566,7 +566,7 @@ export default {
     },
     
     deleteDocument() {
-      database().ref(`documentos/${this.selectedDocument.id}`).remove()
+      database.ref(`documentos/${this.selectedDocument.id}`).remove()
         .then(() => {
           this.showToastNotification('success', 'Éxito', 'Documento eliminado correctamente');
           this.showDeleteConfirmModal = false;
@@ -579,7 +579,7 @@ export default {
     },
     
     loadDocuments() {
-      database().ref('documentos').once('value')
+      database.ref('documentos').once('value')
         .then(snapshot => {
           const documents = [];
           snapshot.forEach(childSnapshot => {

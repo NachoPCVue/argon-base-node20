@@ -192,7 +192,7 @@ export default {
     uploadDocument() {
       if (!this.isFormValid) return;
       
-      const user = auth().currentUser;
+      const user = auth.currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para subir documentos');
         return;
@@ -213,7 +213,7 @@ export default {
           createdBy: user.email
         };
         
-        return database().ref('operacion').push(docData);
+        return database.ref('operacion').push(docData);
       }).then(() => {
         this.showToastNotification('success', 'Éxito', 'Documento subido correctamente');
         this.showAddDocumentModal = false;
@@ -237,7 +237,7 @@ export default {
     },
     
     loadDocuments() {
-      database().ref('operacion').once('value')
+      database.ref('operacion').once('value')
         .then(snapshot => {
           const docs = [];
           snapshot.forEach(childSnapshot => {

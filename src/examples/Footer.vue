@@ -12,56 +12,59 @@ const store = useStore();
             :class="store.state.isRTL ? 'text-lg-end' : 'text-lg-start'"
           >
             ©
-            {{ new Date().getFullYear() }}, made with
-            <i class="fa fa-heart"></i> by
+            {{ new Date().getFullYear() }}, hecho
+            <i class="fa fa-heart"></i> por
             <a
-              href="https://www.creative-tim.com"
+              href="https://www.pqc.cl"
               class="font-weight-bold"
               target="_blank"
-              >Creative Tim</a
+              >PQC</a
             >
-            for a better web.
+            para la gestion de sus documentos.
           </div>
         </div>
         <div class="col-lg-6">
-          <ul
-            class="nav nav-footer justify-content-center justify-content-lg-end"
-          >
-            <li class="nav-item">
-              <a
-                href="https://www.creative-tim.com"
-                class="nav-link text-muted"
-                target="_blank"
-                >Creative Tim</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                href="https://www.creative-tim.com/presentation"
-                class="nav-link text-muted"
-                target="_blank"
-                >About Us</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                href="https://www.creative-tim.com/blog"
-                class="nav-link text-muted"
-                target="_blank"
-                >Blog</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                href="https://www.creative-tim.com/license"
-                class="nav-link pe-0 text-muted"
-                target="_blank"
-                >License</a
-              >
-            </li>
-          </ul>
+          <div class="contact-info">
+            <div class="mb-2">
+              <i class="fa fa-map-marker"></i> Baquedano #239, Oficina #203, Antofagasta
+            </div>
+            <div class="mb-2">
+              <i class="fa fa-map-marker"></i> Bulnes #79, oficina #64, Santiago
+            </div>
+            <div class="mb-2">
+              <i class="fa fa-phone"></i> 
+              <a href="tel:+56940190297" class="text-muted">+56940190297</a> / 
+              <a href="tel:+56979285306" class="text-muted">+56979285306</a>
+            </div>
+            <div>
+              <i class="fa fa-envelope"></i> 
+              <a href="mailto:secretaria@pqc.cl" class="text-muted">secretaria@pqc.cl</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 </template>
+
+<style scoped>
+.contact-info {
+  text-align: right;
+  color: #67748e;
+}
+
+.contact-info a {
+  text-decoration: none;
+}
+
+.contact-info i {
+  margin-right: 5px;
+}
+
+@media (max-width: 992px) {
+  .contact-info {
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+</style>

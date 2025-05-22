@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { auth } from "../firebase";
 import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
 import Billing from "../views/Billing.vue";
@@ -71,11 +72,13 @@ const routes = [
     path: "/signin",
     name: "Signin",
     component: Signin,
+    meta: { hideNav: true }
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
+    meta: { hideNav: true }
   },
   
   // MiSig routes
@@ -171,6 +174,7 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    meta: { hideNav: true }
   },
   {
     path: "/logout",
@@ -181,6 +185,7 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+    meta: { hideNav: true }
   },
   {
     path: "/uploaddata/:keydb/:datavalue",
@@ -200,6 +205,26 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
+});
+
+// Navigation guard to check authentication
+router.beforeEach((to, from, next) => {
+  // Define public routes that don't require authentication
+  const publicRoutes = ['/login', '/register', '/signin', '/signup'];
+  
+  // Check if the route requires authentication
+  const requiresAuth = !publicRoutes.includes(to.path);
+  
+  // Get the current user from Firebase auth
+  const currentUser = auth.currentUser;
+  
+  if (requiresAuth && !currentUser) {
+    // If the route requires auth and there's no current user, redirect to login
+    next('/login');
+  } else {
+    // Otherwise proceed as normal
+    next();
+  }
 });
 
 export default router;

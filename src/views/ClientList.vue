@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-image: url(img/aisladores.jpg); background-size: cover; background-position: center top;">
-      <span class="mask bg-gradient-success opacity-8"></span>
-      <div class="container-fluid d-flex align-items-center">
-        <div class="row">
-          <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Lista de Clientes</h1>
-            <p class="text-white mt-0 mb-5">Gestión de clientes y partes interesadas</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -603,7 +591,7 @@ export default {
         return;
       }
       
-      const user = auth().currentUser;
+      const user = auth.currentUser;
       if (!user) {
         this.showToastNotification('error', 'Error', 'Debe iniciar sesión para realizar esta acción');
         return;
@@ -615,7 +603,7 @@ export default {
         const clientData = { ...this.currentClient };
         delete clientData.id;
         
-        database().ref(`clientes/${clientId}`).update(clientData)
+        database.ref(`clientes/${clientId}`).update(clientData)
           .then(() => {
             // Actualizar en la lista local
             const index = this.clients.findIndex(c => c.id === clientId);
@@ -639,7 +627,7 @@ export default {
           createdBy: user.email
         };
         
-        database().ref('clientes').push(clientData)
+        database.ref('clientes').push(clientData)
           .then(ref => {
             // Agregar a la lista local
             this.clients.push({
@@ -665,7 +653,7 @@ export default {
         return;
       }
       
-      database().ref(`clientes/${this.selectedClient.id}`).remove()
+      database.ref(`clientes/${this.selectedClient.id}`).remove()
         .then(() => {
           // Eliminar de la lista local
           this.clients = this.clients.filter(c => c.id !== this.selectedClient.id);
@@ -680,7 +668,7 @@ export default {
     },
     
     loadClients() {
-      database().ref('clientes').once('value')
+      database.ref('clientes').once('value')
         .then(snapshot => {
           const clients = [];
           snapshot.forEach(childSnapshot => {

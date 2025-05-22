@@ -1,61 +1,7 @@
 <template>
   <div>
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-image: url(img/aisladores.jpg); background-size: cover; background-position: center top;">
-      <span class="mask bg-gradient-primary opacity-8"></span>
-      <div class="container-fluid d-flex align-items-center">
-        <div class="row">
-          <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Contexto de la Organización</h1>
-            <p class="text-white mt-0 mb-5">Análisis del entorno y partes interesadas</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="container-fluid mt--7">
       <div class="row">
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-          <div class="card card-profile shadow">
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-info mr-4" @click="activeTab = 'foda'">FODA</a>
-                <a href="#" class="btn btn-sm btn-default float-right" @click="activeTab = 'partes'">Partes Interesadas</a>
-              </div>
-            </div>
-            <div class="card-body pt-0 pt-md-4">
-              <div class="row">
-                <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                    <div>
-                      <span class="heading">4</span>
-                      <span class="description">Subcategorías</span>
-                    </div>
-                    <div>
-                      <span class="heading">0</span>
-                      <span class="description">Documentos</span>
-                    </div>
-                    <div>
-                      <span class="heading">0%</span>
-                      <span class="description">Completado</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="text-center">
-                <h3>Contexto de la Organización</h3>
-                <div class="h5 font-weight-300">
-                  <i class="ni location_pin mr-2"></i>Análisis estratégico
-                </div>
-                <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>Gestión de calidad
-                </div>
-                <hr class="my-4" />
-                <p>Esta sección aborda la comprensión de la organización y su contexto, la comprensión de las necesidades y expectativas de las partes interesadas, y la determinación del alcance del sistema de gestión de calidad.</p>
-                <a href="#" @click.prevent="showInfoModal = true">Más información</a>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-xl-8 order-xl-1">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -300,5 +246,37 @@ export default {
 .card-header {
   padding: 0.75rem 1.25rem;
   background-color: #f6f9fc;
+}
+
+/* Estilos para mejorar la legibilidad de las pestañas */
+.nav-tabs {
+  background-color: #f8f9fa;
+  border-radius: 0.375rem;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: 0;
+}
+
+.nav-tabs .nav-link {
+  color: #525f7f;
+  background-color: #f8f9fa;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.15s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #e9ecef;
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+  color: #5e72e4;
+  background-color: #ffffff;
+  border-color: #dee2e6 #dee2e6 #ffffff;
+  font-weight: 600;
 }
 </style>
